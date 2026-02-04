@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: og-generator
+  threads:
+    virtual:
+      enabled: true
+  main:
+    headless: true
