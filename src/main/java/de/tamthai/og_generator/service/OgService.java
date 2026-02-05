@@ -14,7 +14,10 @@ import org.xhtmlrenderer.simple.Graphics2DRenderer;
 import org.xhtmlrenderer.swing.Java2DRenderer;
 import org.xml.sax.SAXException;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class OgService {
     // private final Playwright playwright = Playwright.create();
     // private final Browser browser = playwright.chromium().launch();
@@ -78,6 +81,7 @@ public class OgService {
     }
 
     public byte[] fromHtml(String title, String description) throws SAXException, IOException {
+        long startTime = System.currentTimeMillis();
         String xhtml = """
                 <html xmlns="http://www.w3.org/1999/xhtml">
                 <head>
@@ -121,24 +125,25 @@ public class OgService {
                     <div class="content">
                         <div style="position: relative; width: fit-content">
                             <div
-                                style="background: black; z-index: 1; padding-top: 20px; position: absolute; width: 100px; height: 100px; top: -20px;left: -20px;">
+                                style="background-color: rgb(57,57,57); z-index: 1; padding-top: 20px; position: absolute; width: 100px; height: 100px; top: -20px;left: -20px;">
                             </div>
                             <h1>%s</h1>
                             <div
-                                style="background: black; position: absolute; width: 100px; height: 100px; bottom: -20px;right: -20px;">
+                                style="background-color: rgb(57,57,57); position: absolute; width: 100px; height: 100px; bottom: -20px;right: -20px;">
                             </div>
                         </div>
                         <h2>%s</h2>
                     </div>
                 </body>
-
                 </html>
-                                """
+                """
                 .formatted(title, description);
         BufferedImage image = Java2DRenderer.htmlAsImage(xhtml, 1200);
         // Convert to PNG bytes
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(image, "png", baos);
+        long duration = System.currentTimeMillis() - startTime;
+        log.info("Generated title: {}, description: {}, ms: {}", title, description, duration);
         return baos.toByteArray();
     }
 

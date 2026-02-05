@@ -21,14 +21,20 @@ repositories {
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-webmvc")
-	developmentOnly("org.springframework.boot:spring-boot-devtools")
-	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    // // Source: https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core 
+    // Source: https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core 
     implementation("org.xhtmlrenderer:flying-saucer-core:10.0.6")
-	
+    // Source: https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly("org.projectlombok:lombok:1.18.42")
+    annotationProcessor("org.projectlombok:lombok:1.18.42")
 	// // Source: https://mvnrepository.com/artifact/com.microsoft.playwright/playwright
 	// implementation("com.microsoft.playwright:playwright:1.58.0")
+
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
+	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testCompileOnly("org.projectlombok:lombok:1.18.42")
+    testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
 }
 
 tasks.withType<Test> {

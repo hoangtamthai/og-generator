@@ -1,5 +1,6 @@
 package de.tamthai.og_generator.controller;
 
+import java.io.IOException;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.xml.sax.SAXException;
 
 import de.tamthai.og_generator.service.OgService;
 
@@ -22,8 +24,7 @@ public class OgController {
     @GetMapping(value = "/api/og", produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] generateFromTemplate(
             @RequestParam(required = false) Optional<String> url, @RequestParam(required = false) String title,
-            @RequestParam(required = false) String description)
-            throws Exception {
+            @RequestParam(required = false) String description) throws SAXException, IOException {
         int width = 1200;
         int height = 630;
 
@@ -32,9 +33,6 @@ public class OgController {
         }
 
         return ogService.fromHtml(title, description);
-        // return ogService.fromTemplate(title, description, width, height);
-        // return ogService.generateWithFlyingSaucer(title, description, width, height);
-        // return ogService.generate(title, description, width, height);
     }
 
     @GetMapping("/api/og/thread")
