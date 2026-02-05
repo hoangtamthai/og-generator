@@ -24,11 +24,35 @@ dependencies {
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    // // Source: https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core 
+    implementation("org.xhtmlrenderer:flying-saucer-core:10.0.6")
 	
-	// Source: https://mvnrepository.com/artifact/com.microsoft.playwright/playwright
-	implementation("com.microsoft.playwright:playwright:1.58.0")
+	// // Source: https://mvnrepository.com/artifact/com.microsoft.playwright/playwright
+	// implementation("com.microsoft.playwright:playwright:1.58.0")
 }
 
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+	exclude("**/driver/mac/**")
+    exclude("**/driver/win/**")
+}
+
+// tasks.named<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
+// 	// 1. Set the builder
+//     // builder.set("paketobuildpacks/builder-jammy-buildpackless-tiny")
+    
+//     // // 2. EXPLICITLY add the buildpacks. 
+//     // // Tiny builders need to be told exactly what to run.
+//     // buildpacks.set(listOf(
+//     //     "docker.io/paketobuildpacks/oracle",
+//     //     "docker.io/paketobuildpacks/java-native-image"
+//     // ))
+
+//     // 3. Environment settings
+//     imagePlatform.set("linux/amd64")
+//     environment.put("BP_NATIVE_IMAGE", "true")
+//     environment.put("BP_JVM_VERSION", "25")
+// }
